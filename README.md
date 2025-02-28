@@ -48,7 +48,7 @@ returns the firmware revision: 0xBA, 0x64, 0x10 for instance for rev 1.0
 
 # License
 
-![OpenSourceLicense](https://github.com/push-n-turn-midi61/OpenSourceLicense.png)
+![OpenSourceLicense](https://github.com/concept-code-design/push-n-turn-midi61/blob/main/OpenSourceLicense.png)
 
 Concept & Code invests time and resources providing this open source design, please support them and open-source hardware by purchasing products from Etsy or Tindie!
 
