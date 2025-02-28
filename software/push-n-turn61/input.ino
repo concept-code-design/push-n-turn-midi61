@@ -1,38 +1,3 @@
-
-
-// static void encoder_cw(void){
-//   if (currentMode == PLAY_MODE){
-//       sendCtlChange(MIDI_CHANNEL, DATA[5], encValue);
-//       signalEncoderChange(encValue);
-//       break;
-//     case TOGGLE_MODE:
-//         sendCtlChange(MIDI_CHANNEL, ENCODER_CC, encValue);
-//         signalEncoderChange(encValue);
-//       break;
-//     default:
-//       break;
-//   }
-// }
-
-// static void encoder_ccw(void){
-//   switch (currentMode){
-//     case PROG_MODE:
-//         currentKey--; if (currentKey < 0) currentKey = 0;
-//         NEO_Wheel(currentKey, CKEYSELECT, 1);
-//       break;
-//     case NOTE_MODE:
-//         sendCtlChange(MIDI_CHANNEL, ENCODER_CC, encValue);
-//         signalEncoderChange(encValue); 
-//         break;       
-//     case TOGGLE_MODE:
-//         sendCtlChange(MIDI_CHANNEL, ENCODER_CC, encValue);
-//         signalEncoderChange(encValue);
-//       break;
-//     default:
-//       break;
-//   }
-// }
-
 void init_ENCODER(){
     pinMode(ENCODER_A, INPUT_PULLUP);
     pinMode(ENCODER_B, INPUT_PULLUP);
@@ -57,15 +22,15 @@ void encoderUpdate(){
         // for each clockwise and counterclockwise, the encoder state goes through 4 distinct states
         // make sure it's gone through at least 3 of those (and assume if one is missing it's because I didn't read fast enough)
         if (encClockState_s == 0b1011 || encClockState_s == 0b1101 || encClockState_s == 0b1110 || encClockState_s == 0b1111){
-        	encValue++;
+        	encValue += encStepSize;
         	if (encValue > 127) encValue = 127; //cw
-          sendCtlChange(MIDI_CHANNEL, DATA[6], encValue);
+          sendCtlChange(MIDI_CHANNEL, DATA[7], encValue);
           NEO_Wheel(ENCODER_NEO,encValue,1 );
         }
         if (encCounterClockState_s == 0b1011 || encCounterClockState_s == 0b1101 || encCounterClockState_s == 0b1110 || encCounterClockState_s == 0b1111){
-        	encValue--;
+        	encValue -= encStepSize;
         	if (encValue < 0) encValue = 0; //ccw
-          sendCtlChange(MIDI_CHANNEL, DATA[6], encValue);
+          sendCtlChange(MIDI_CHANNEL, DATA[7], encValue);
           NEO_Wheel(ENCODER_NEO,encValue,1);
         }
         encClockState_s = 0;
@@ -87,7 +52,7 @@ void switchUpdate(){
         if (switchState[i] == LOW) {
           handleSwitch(i);
         } else if ((switchState[i] == HIGH)  && (currentMode == PLAY_MODE)) { // && (lastSwitchState[i] == LOW)
-          midiNoteOff(i);
+          if (TYPE[i] == NOTE) midiNoteOff(i); else if (TYPE[i] == CC_MOMENTARY) midiCCoff(i);
         }
       }
     }
@@ -102,13 +67,10 @@ void handleSwitch(int switchIndex) {
       break;
     case CC_TOGGLE:
       toggleState[switchIndex] = !toggleState[switchIndex];
-      if (toggleState[switchIndex] == 1){
-      midiCCon(switchIndex);
-      } else midiCCoff(switchIndex);
+      if (toggleState[switchIndex] == 1) midiCCon(switchIndex, CTOGGLE); else midiCCoff(switchIndex);
       break;
     case CC_MOMENTARY:
-      midiCCon(switchIndex);
-      midiCCoff(switchIndex);
+      midiCCon(switchIndex, CMOMENTARY);
       break;
     default:
       break;

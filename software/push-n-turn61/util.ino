@@ -1,15 +1,15 @@
 
 void check_PROGBOOT_REQUEST(){
     // Go in bootloader mode if connected with encoder button pressed
-  if (!digitalRead(PROGBOOT_BTN))//  && !digitalRead(SWITCHES[0]) && !digitalRead(SWITCHES[2]))
-  {
-    for (int i = 0 ; i < NEO_COUNT; i++ )      NEO_Wheel(i, CRIMSON, 0);
-    NEO_update();                              // update pixels
+  if (!digitalRead(PROGBOOT_BTN))
+  {                             
     PROGBOOT_now();     // jump to bootloader
   }
 }
 
 void PROGBOOT_now(void){
+  for (int i = 0 ; i < NEO_COUNT; i++ )      NEO_Wheel(i, CRIMSON, 0);
+  NEO_update();  
   USB_CTRL = 0;
   EA = 0;
   TMOD = 0;
@@ -93,16 +93,18 @@ void indicatorUpdate(uint8_t pixel, uint8_t color, uint8_t state){
 
 void readEEPROM(){
   MIDI_CHANNEL = eeprom_read_byte(0);
-  for (int i = 0; i < 7; i++) {
-    TYPE[i] = eeprom_read_byte(1+i);
-    DATA[i] = eeprom_read_byte(8+i);
+  encStepSize = eeprom_read_byte(1);
+  for (int i = 0; i < 8; i++) {
+    TYPE[i] = eeprom_read_byte(2+i);
+    DATA[i] = eeprom_read_byte(9+i);
   }
 }
 
 void writeEEPROM(){
   eeprom_write_byte(0, MIDI_CHANNEL);
-  for (int i = 0; i < 7; i++) {
-    eeprom_write_byte(1+i, TYPE[i]);
-    eeprom_write_byte(8+i, DATA[i]);
+  eeprom_write_byte(1, encStepSize);
+  for (int i = 0; i < 8; i++) {
+    eeprom_write_byte(2+i, TYPE[i]);
+    eeprom_write_byte(9+i, DATA[i]);
   }
 }

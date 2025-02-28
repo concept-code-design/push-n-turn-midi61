@@ -23,15 +23,12 @@ void NEO_Wheel(int, int, bool);
 
 void midiNoteOn(uint8_t);
 void midiNoteOff(uint8_t);
-void midiCCon(uint8_t);
+void midiCCon(uint8_t, uint8_t);
 void midiCCoff(uint8_t);
-void onNoteOn(uint8_t ch, uint8_t note, uint8_t vel);
-void onNoteOff(__xdata uint8_t ch, __xdata uint8_t note);
+
 void onCTLChange(uint8_t ch, uint8_t note, uint8_t vel);
 
 void init_ENCODER();
-static void encoder_cw(void);
-static void encoder_ccw(void);
 void encoderUpdate();
 void signalEncoderChange(uint8_t value);
 

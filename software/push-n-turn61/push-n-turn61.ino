@@ -30,28 +30,18 @@
 void setup(){
  readEEPROM();
   init_PINS();
-  init_ENCODER();
+  if (NUM_ENCODERS > 0) init_ENCODER();
 
   init_NEO();
 
   check_PROGBOOT_REQUEST();
   USBInit();
-
- // setHdlNoteOn(onNoteOn);
- // setHdlNoteOff(onNoteOff);
   setHdlCtlChange(onCTLChange);
 }
 
 void loop() {
   switchUpdate();
-  encoderUpdate();
-  
-  // if (NEO_dirty && (millis() > NEO_reset)){                 
-  //   if (colors[ENCODER_NEO] == 0) NEO_clearPixel(ENCODER_NEO); else NEO_Wheel(ENCODER_NEO, colors[ENCODER_NEO]);
-    
-  //  // NEO_update();
-  //   NEO_dirty = false;
-  // }
+  if (NUM_ENCODERS > 0) encoderUpdate();
   processMidiMessage();
   USBSerial_flush();
 }
