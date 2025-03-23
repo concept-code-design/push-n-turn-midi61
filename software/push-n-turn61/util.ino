@@ -96,7 +96,7 @@ void readEEPROM(){
   encStepSize = eeprom_read_byte(1);
   for (int i = 0; i < 8; i++) {
     TYPE[i] = eeprom_read_byte(2+i);
-    DATA[i] = eeprom_read_byte(9+i);
+    DATA[i] = eeprom_read_byte(12+i);
   }
 }
 
@@ -105,6 +105,6 @@ void writeEEPROM(){
   eeprom_write_byte(1, encStepSize);
   for (int i = 0; i < 8; i++) {
     eeprom_write_byte(2+i, TYPE[i]);
-    eeprom_write_byte(9+i, DATA[i]);
+    eeprom_write_byte(12+i, DATA[i]);
   }
 }

@@ -25,6 +25,7 @@ void midiNoteOn(uint8_t);
 void midiNoteOff(uint8_t);
 void midiCCon(uint8_t, uint8_t);
 void midiCCoff(uint8_t);
+void showConfig();
 
 void onCTLChange(uint8_t ch, uint8_t note, uint8_t vel);
 

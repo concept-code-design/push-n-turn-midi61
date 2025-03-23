@@ -1,10 +1,3 @@
-// Application
-uint8_t VERSION;
-
-// extern __xdata uint8_t ch;
-// extern __xdata uint8_t note;
-// extern __xdata uint8_t vel;
-
 // hardware
 #define INSTRUMENT_TYPE 61 // this is a push & turn 61
 
@@ -31,9 +24,9 @@ static uint8_t SWITCHES[NUM_SWITCHES] = {11, 17, 16, 15, 14, 32, 33};
 #define ENCODERSTEPS  6
 
 // soundControl
-__xdata uint8_t TYPE[NUM_SWITCHES] = {0, 0, 0, 0, 0, 0, 3}; // encoder is 6
+__xdata uint8_t TYPE[NUM_SWITCHES];
 
-__xdata uint8_t DATA[NUM_SWITCHES] = {3, 9, 14, 15, 20, 21, 22}; // undefined midi CCs. 3,9, 14, 15, 20-31, 85-87,89,90, 102-119
+__xdata uint8_t DATA[NUM_SWITCHES];// = {3, 9, 14, 15, 20, 21, 22}; // undefined midi CCs. 3,9, 14, 15, 20-31, 85-87,89,90, 102-119
 __xdata uint8_t MIDI_CHANNEL = 12;
 __xdata uint8_t VELOCITY = 127;
 
