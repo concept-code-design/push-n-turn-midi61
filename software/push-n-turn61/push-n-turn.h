@@ -21,7 +21,8 @@ void indicatorUpdate(uint8_t pixel, uint8_t color, uint8_t state);
 
 void NEO_Wheel(int, int, bool);
 
-void midiNoteOn(uint8_t);
+void processMidiMessage();
+void midiNoteOn(uint8_t, uint8_t);
 void midiNoteOff(uint8_t);
 void midiCCon(uint8_t, uint8_t);
 void midiCCoff(uint8_t);
