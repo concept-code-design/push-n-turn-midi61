@@ -1,1 +1,18 @@
-Dit is een testfile voor de M5 stack Paper S3
+{
+  "message": {
+    "type": "text",
+    "value": "Dit is een testfile voor de M5 stack Paper S3"
+  },
+  "label1": {
+    "type": "text",
+    "value": "Belangrijke meeting"
+  },
+  "label2": {
+    "type": "text",
+    "value": "bellen met Esther"
+  },
+  "label3": {
+    "type": "text",
+    "value": "Tatiana instrueren"
+  }
+}
